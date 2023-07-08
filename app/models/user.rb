@@ -2,6 +2,7 @@ class User < ApplicationRecord
   validates :name, presence: true
 
   has_many :follows
+  has_many :sleeps
 
   def follow(user)
     follows.create!(followed_user: user)

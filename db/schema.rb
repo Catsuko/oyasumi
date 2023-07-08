@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_08_074307) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_08_115813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_08_074307) do
     t.index ["user_id", "followed_user_id"], name: "index_follows_on_user_id_and_followed_user_id", unique: true
   end
 
+  create_table "sleeps", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "started_at", null: false
+    t.datetime "ended_at"
+    t.virtual "duration", type: :interval, as: "age(ended_at, started_at)", stored: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "started_at"], name: "index_sleeps_on_user_id_and_started_at"
+    t.index ["user_id"], name: "index_sleeps_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -30,4 +41,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_08_074307) do
 
   add_foreign_key "follows", "users"
   add_foreign_key "follows", "users", column: "followed_user_id"
+  add_foreign_key "sleeps", "users"
 end
