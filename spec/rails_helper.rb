@@ -4,10 +4,13 @@ require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require_relative 'support/request_specs'
 
 RSpec.configure do |config|
   config.use_active_record = true
   config.use_transactional_fixtures = false
+  config.infer_spec_type_from_file_location!
+  config.filter_rails_from_backtrace!
 
   DatabaseCleaner.strategy = :transaction
 
@@ -22,9 +25,4 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
-
-  config.infer_spec_type_from_file_location!
-  config.filter_rails_from_backtrace!
-
-  config.include Rails.application.routes.url_helpers, type: :request
 end

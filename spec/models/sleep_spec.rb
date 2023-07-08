@@ -21,7 +21,7 @@ RSpec.describe Sleep do
 
   describe "#duration" do
     let(:started_at) { 2.hours.ago }
-    let(:ended_at) { started_at + 1.hour }
+    let(:ended_at) { 1.hour.since(started_at) }
     let(:sleep) { user.sleeps.create!(started_at: started_at, ended_at: ended_at).reload }
 
     subject { sleep.duration }

@@ -1,4 +1,5 @@
 class Sleep < ApplicationRecord
+  validates :started_at, presence: true
   validate :ended_at_comes_after_start
 
   belongs_to :user
