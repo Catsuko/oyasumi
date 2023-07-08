@@ -6,7 +6,7 @@ class CreateSleeps < ActiveRecord::Migration[7.0]
       t.datetime :ended_at
       t.virtual :duration, type: :interval, as: "AGE(ended_at, started_at)", stored: true
       t.timestamps
-      t.index %i(user_id started_at)
+      t.index %i(user_id started_at), unique: true
     end
   end
 end
