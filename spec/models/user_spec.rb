@@ -16,6 +16,14 @@ RSpec.describe User do
       subject
       expect { subject }.not_to change(Follow, :count)
     end
+
+    context "following themselves" do
+      let(:other_user) { user }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
   end
 
   describe "#unfollow" do
