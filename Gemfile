@@ -16,6 +16,6 @@ group :development, :test do
   gem "rspec-rails", "~> 6.0"
 end
 
-group :development do
+group :test do
   gem "database_cleaner-active_record"
 end
