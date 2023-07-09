@@ -9,6 +9,12 @@ class Sleep < ApplicationRecord
     cursor.present? ? ordered.where("started_at < ?", cursor) : ordered
   end
 
+  scope :during_week, ->(time) { where(started_at: time.all_week) }
+  scope :followed_by, ->(user) do
+    joins("JOIN follows ON follows.followed_user_id = sleeps.user_id")
+      .where(follows: { user_id: user.id })
+  end
+
   private
 
   def ended_at_comes_after_start

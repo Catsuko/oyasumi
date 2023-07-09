@@ -39,4 +39,33 @@ RSpec.describe Sleep do
     end
   end
 
+  describe '.followed_by' do
+    let(:followed_user) { User.create!(name: "Nyx") }
+    let(:unknown_user) { User.create!(name: "Pugna") }
+    let!(:followed_sleep) { followed_user.sleeps.create!(started_at: 3.hours.ago, ended_at: 1.hour.ago) }
+    let!(:unknown_sleep) { unknown_user.sleeps.create!(started_at: 1.hour.ago, ended_at: 5.minutes.ago) }
+
+    subject { described_class.followed_by(user) }
+
+    before do
+      user.follows.create!(followed_user: followed_user)
+    end
+
+    it 'contains only sleeps from users followed by the provided user' do
+      is_expected.to contain_exactly(followed_sleep)
+    end
+  end
+
+  describe '.during_week' do
+    let(:time) { Time.current }
+    let(:during_week_sleep) { user.sleeps.create!(started_at: 5.minutes.ago) }
+    let(:irrelevant_sleep) { user.sleeps.create!(started_at: 1.year.ago) }
+
+    subject { described_class.during_week(time) }
+
+    it 'contains only sleeps from the week of the provided time' do
+      is_expected.to contain_exactly(during_week_sleep)
+    end
+  end
+
 end

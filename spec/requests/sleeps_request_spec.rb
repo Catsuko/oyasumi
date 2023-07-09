@@ -130,7 +130,7 @@ RSpec.describe "Sleeps Requests" do
     it "responds with an empty array when pagination has reached the last result" do
       index_params.merge!(from: sleeps.last.started_at.as_json)
       subject
-      expect(json_response.fetch("data")).to be_empty
+      expect(json_response).to match hash_including("data" => [])
     end
   end
 end
