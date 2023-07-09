@@ -4,5 +4,5 @@ Rails.application.routes.draw do
     resources :sleeps, only: %i(index create update)
   end
 
-  root to: "sleeps#index", user_id: 1
+  root to: "sleeps#index", user_id: 1, defaults: { format: :json }
 end
