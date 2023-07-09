@@ -34,8 +34,88 @@ docker exec oyasumi_app_1 rspec -fd
 
 ## Resources
 
-TODO: List the endpoints and options for people to use
+### Sleeps
+
+<details>
+ <summary><code>GET</code> <code><b>/users/:user_id/sleeps</b></code> ⇌ list sleeps for the user</summary>
+
+##### Parameters
+
+> | name      |  type     | data type               | location  | description                                                    |
+> |-----------|-----------|-------------------------|-----------|----------------------------------------------------------------|
+> | user_id   |  required | integer                 | path      | id of the owner of the sleeps                                  |
+> | number    |  optional | integer                 | query     | default and maximum is 50                                      |
+> | from      |  optional | string                  | query     | ISO8601 datetime format; use previous `started_at` to paginate |
+
+</details>
+
+<details>
+ <summary><code>POST</code> <code><b>/users/:user_id/sleeps</b></code> ⇌ record sleep for the user</summary>
+
+##### Parameters
+
+> | name               |  type     | data type               | location  | description                                                    |
+> |--------------------|-----------|-------------------------|-----------|----------------------------------------------------------------|
+> | user_id            |  required | integer                 | path      | id of the owner of the sleep                                   |
+> | sleep[started_at]  |  required | string                  | body      | ISO8601 datetime format; start date and time of the sleep      |
+> | sleep[ended_at]    |  optional | string                  | body      | ISO8601 datetime format; end date and time of the sleep        |
+
+</details>
+
+<details>
+ <summary><code>PUT</code> <code><b>/users/:user_id/sleeps</b></code> ⇌ update sleep details for the user</summary>
+
+##### Parameters
+
+> | name               |  type     | data type               | location  | description                                                    |
+> |--------------------|-----------|-------------------------|-----------|----------------------------------------------------------------|
+> | user_id            |  required | integer                 | path      | id of the owner of the sleep                                   |
+> | sleep[started_at]  |  optional | string                  | body      | ISO8601 datetime format; start date and time of the sleep      |
+> | sleep[ended_at]    |  optional | string                  | body      | ISO8601 datetime format; end date and time of the sleep        |
+
+</details>
+
+### Follows
+
+<details>
+ <summary><code>POST</code> <code><b>/users/:user_id/follows</b></code> ⇌ follow another user</summary>
+
+##### Parameters
+
+> | name               |  type     | data type               | location  | description                                                    |
+> |--------------------|-----------|-------------------------|-----------|----------------------------------------------------------------|
+> | user_id            |  required | integer                 | path      | id of the owner of the sleep                                   |
+> | followed_user_id   |  required | integer                 | body      | id of the user to follow                                       |
+
+</details>
+
+<details>
+ <summary><code>DELETE</code> <code><b>/users/:user_id/follows/:followed_user_id</b></code> ⇌ unfollow a user</summary>
+
+##### Parameters
+
+> | name               |  type     | data type               | location  | description                                                    |
+> |--------------------|-----------|-------------------------|-----------|----------------------------------------------------------------|
+> | user_id            |  required | integer                 | path      | id of the owner of the sleep                                   |
+> | followed_user_id   |  required | integer                 | path      | id of the user to unfollow                                     |
+
+</details>
+
+### Following Sleeps
+
+<details>
+ <summary><code>GET</code> <code><b>/users/:user_id/following_sleeps</b></code> ⇌ lists the longest sleeps from a user's following users in a week</summary>
+
+##### Parameters
+
+> | name      |  type     | data type               | location  | description                                                    |
+> |-----------|-----------|-------------------------|-----------|----------------------------------------------------------------|
+> | user_id   |  required | integer                 | path      | id of the owner of the sleeps                                  |
+> | number    |  optional | integer                 | query     | default and maximum is 50                                      |
+> | week      |  optional | string                  | query     | ISO8601 datetime format; defaults to the current week          |
+
+</details>
 
 ### Mock Data
 
-TODO: Mention seed data and add rake task for filling the database with some mock data so its easy to see how the following sleeps list works.
+The database will be seeded with some mock users to play around with. Given a fresh database, you can use `user_id` from `1-10` to experiment with the endpoints.
