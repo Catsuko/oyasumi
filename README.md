@@ -63,13 +63,14 @@ docker exec oyasumi_app_1 rspec -fd
 </details>
 
 <details>
- <summary><code>PUT</code> <code><b>/users/:user_id/sleeps</b></code> ⇌ update sleep details for the user</summary>
+ <summary><code>PUT</code> <code><b>/users/:user_id/sleeps/:id</b></code> ⇌ update sleep details for the user</summary>
 
 ##### Parameters
 
 > | name               |  type     | data type               | location  | description                                                    |
 > |--------------------|-----------|-------------------------|-----------|----------------------------------------------------------------|
 > | user_id            |  required | integer                 | path      | id of the owner of the sleep                                   |
+> | id                 |  required | integer                 | path      | id of the sleep record                                         |
 > | sleep[started_at]  |  optional | string                  | body      | ISO8601 datetime format; start date and time of the sleep      |
 > | sleep[ended_at]    |  optional | string                  | body      | ISO8601 datetime format; end date and time of the sleep        |
 
