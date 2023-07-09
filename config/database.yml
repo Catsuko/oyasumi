@@ -1,14 +1,18 @@
 default: &default
   adapter: postgresql
-  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: postgres
-  password: password
+  encoding: unicode
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
 
 development:
   <<: *default
-  database: oyasumi_development
+  database: <%= ENV.fetch('DB_NAME', 'oyasumi_development') %>
+  username: <%= ENV.fetch('DB_USER', 'postgres') %>
+  password: <%= ENV.fetch('DB_PASS', 'password') %>
 
 test:
   <<: *default
-  database: oyasumi_test
+  database: <%= ENV.fetch('DB_NAME', 'oyasumi_test') %>
+  username: <%= ENV.fetch('DB_USER', 'postgres') %>
+  password: <%= ENV.fetch('DB_PASS', 'password') %>
