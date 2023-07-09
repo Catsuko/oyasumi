@@ -4,6 +4,10 @@ class Sleep < ApplicationRecord
 
   belongs_to :user
 
+  scope :list_by_started_at, -> do
+    order(started_at: :desc)
+  end
+
   private
 
   def ended_at_comes_after_start

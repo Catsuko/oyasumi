@@ -1,5 +1,11 @@
 class SleepsController < ApplicationController
 
+  def index
+    @sleeps = user.sleeps
+      .list_by_started_at
+      .limit(list_size)
+  end
+
   def create
     @sleep = user.sleeps.create!(sleep_params)
     render :show, status: :created
@@ -18,9 +24,11 @@ class SleepsController < ApplicationController
   end
 
   def sleep_params
-    params.require(:sleep).permit(:started_at, :ended_at).transform_values do |v|
-      v.present? ? Time.at(v).utc : nil
-    end
+    params.require(:sleep).permit(:started_at, :ended_at)
+  end
+
+  def list_size(max: 50)
+    params.fetch(:number, max).to_i.clamp(0, max)
   end
 
 end
