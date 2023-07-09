@@ -2,7 +2,7 @@ class SleepsController < ApplicationController
 
   def index
     @sleeps = user.sleeps
-      .list_by_started_at
+      .list_by_started_at(list_cursor)
       .limit(list_size)
   end
 
@@ -29,6 +29,10 @@ class SleepsController < ApplicationController
 
   def list_size(max: 50)
     params.fetch(:number, max).to_i.clamp(0, max)
+  end
+
+  def list_cursor
+    params[:from].presence
   end
 
 end

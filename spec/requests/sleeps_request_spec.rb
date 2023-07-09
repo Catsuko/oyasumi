@@ -118,5 +118,19 @@ RSpec.describe "Sleeps Requests" do
         hash_including("id" => sleeps.first.id)
       )
     end
+
+    it "can paginate results with the `from` parameter" do
+      index_params.merge!(from: sleeps.first.started_at.as_json, number: 1)
+      subject
+      expect(json_response.fetch("data")).to contain_exactly(
+        hash_including("id" => sleeps.second.id)
+      )
+    end
+
+    it "responds with an empty array when pagination has reached the last result" do
+      index_params.merge!(from: sleeps.last.started_at.as_json)
+      subject
+      expect(json_response.fetch("data")).to be_empty
+    end
   end
 end

@@ -4,8 +4,9 @@ class Sleep < ApplicationRecord
 
   belongs_to :user
 
-  scope :list_by_started_at, -> do
-    order(started_at: :desc)
+  scope :list_by_started_at, ->(cursor) do
+    ordered = order(started_at: :desc)
+    cursor.present? ? ordered.where("started_at < ?", cursor) : ordered
   end
 
   private
