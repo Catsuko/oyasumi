@@ -4,11 +4,12 @@ class ApplicationController < ActionController::API
 
   private
 
-  # TODO: Add some helpful error message formats for exceptions.
+  # TODO: Add error message for related record or parameter
   def handle_not_found(_exception)
     head :not_found
   end
 
+  # TODO: Add error message for invalid fields
   def handle_invalid_record(_exception)
     head :unprocessable_entity
   end
