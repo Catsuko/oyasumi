@@ -7,13 +7,14 @@ class SleepsController < ApplicationController
   end
 
   def create
-    @sleep = user.sleeps.create!(sleep_params)
+    @sleep = user.sleeps.create!(sleep_params).reload
     render :show, status: :created
   end
 
   def update
     @sleep = user.sleeps.find(params.fetch(:id))
     @sleep.update!(sleep_params)
+    @sleep.reload
     render :show
   end
 
