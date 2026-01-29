@@ -66,8 +66,17 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    ast (2.4.3)
+    better_html (2.2.0)
+      actionview (>= 7.0)
+      activesupport (>= 7.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      parser (>= 2.4)
+      smart_properties
     builder (3.2.4)
     concurrent-ruby (1.2.2)
+    constant_resolver (0.3.0)
     crass (1.0.6)
     database_cleaner-active_record (2.1.0)
       activerecord (>= 5.a)
@@ -118,8 +127,24 @@ GEM
     nokogiri (1.15.3-x64-mingw-ucrt)
       racc (~> 1.4)
     oj (3.15.0)
+    packwerk (3.2.3)
+      activesupport (>= 6.0)
+      ast
+      better_html
+      bundler
+      constant_resolver (>= 0.3)
+      parallel
+      parser
+      prism (>= 0.25.0)
+      sorbet-runtime (>= 0.5.9914)
+      zeitwerk (>= 2.6.1)
+    parallel (1.27.0)
+    parser (3.3.10.1)
+      ast (~> 2.4.1)
+      racc
     pg (1.5.3)
     pg (1.5.3-x64-mingw-ucrt)
+    prism (1.9.0)
     puma (5.6.6)
       nio4r (~> 2.0)
     racc (1.7.1)
@@ -174,6 +199,8 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.0)
+    smart_properties (1.17.0)
+    sorbet-runtime (0.6.12904)
     thor (1.2.2)
     timeout (0.4.0)
     tzinfo (2.0.6)
@@ -195,6 +222,7 @@ DEPENDENCIES
   debug
   jbuilder
   oj
+  packwerk (~> 3.2)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.6)
