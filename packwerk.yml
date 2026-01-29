@@ -6,8 +6,8 @@
 # - "**/*.{rb,rake,erb}"
 
 # List of patterns for folder paths to exclude
-# exclude:
-# - "{bin,node_modules,script,tmp,vendor}/**/*"
+exclude:
+- "{bin,node_modules,script,tmp,vendor,db,spec}/**/*"
 
 # Patterns to find package configuration files
 # package_paths: "**/"
@@ -21,3 +21,7 @@
 
 # Where you want the cache to be stored (default below)
 # cache_directory: 'tmp/cache/packwerk'
+
+require:
+  - packwerk/privacy/checker
+  

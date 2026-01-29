@@ -21,3 +21,7 @@ group :test do
 end
 
 gem "packwerk", "~> 3.2"
+
+gem "chatwerk", "~> 0.1.0"
+
+gem "packwerk-extensions", "~> 0.3.0"
