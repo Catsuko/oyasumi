@@ -1,23 +1,19 @@
 class FollowsController < ApplicationController
 
   def create
-    user.follow(followed_user)
+    user_profile.follow(params.fetch(:followed_user_id))
     head :no_content
   end
 
   def destroy
-    user.unfollow(followed_user)
+    user_profile.unfollow(params.fetch(:followed_user_id))
     head :no_content
   end
 
   private
 
-  def user
-    User.find(params.fetch(:user_id))
-  end
-
-  def followed_user
-    User.find(params.fetch(:followed_user_id))
+  def user_profile
+    Sleeping.user_profile(params.fetch(:user_id))
   end
 
 end

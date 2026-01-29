@@ -1,28 +1,28 @@
 class SleepsController < ApplicationController
 
   def index
-    @sleeps = user.sleeps
-      .list_by_started_at(list_cursor)
-      .limit(list_size)
+    @sleeps = sleep_journal.list_sleeps(cursor: list_cursor, limit: list_size)
     render json: ResponseSerializer.new(@sleeps, serializer: SleepSerializer)
   end
 
   def create
-    @sleep = user.sleeps.create!(sleep_params).reload
+    @sleep = sleep_recorder.record(sleep_params)
     render json: ResponseSerializer.new(@sleep, serializer: SleepSerializer), status: :created
   end
 
   def update
-    @sleep = user.sleeps.find(params.fetch(:id))
-    @sleep.update!(sleep_params)
-    @sleep.reload
+    @sleep = sleep_recorder.update(params.fetch(:id), sleep_params)
     render json: ResponseSerializer.new(@sleep, serializer: SleepSerializer)
   end
 
   private
 
-  def user
-    User.find(params.fetch(:user_id))
+  def sleep_journal
+    Sleeping.journal(params.fetch(:user_id))
+  end
+
+  def sleep_recorder
+    Sleeping.recorder(params.fetch(:user_id))
   end
 
   def sleep_params

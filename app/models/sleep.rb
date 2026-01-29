@@ -4,15 +4,17 @@ class Sleep < ApplicationRecord
 
   belongs_to :user
 
+  scope :for_user, ->(user_id) { where(user_id: user_id) }
+
   scope :list_by_started_at, ->(cursor) do
     ordered = order(started_at: :desc)
     cursor.present? ? ordered.where("started_at < ?", cursor) : ordered
   end
 
   scope :during_week, ->(time) { where(started_at: time.all_week) }
-  scope :followed_by, ->(user) do
+  scope :followed_by, ->(user_id) do
     joins("JOIN follows ON follows.followed_user_id = sleeps.user_id")
-      .where(follows: { user_id: user.id })
+      .where(follows: { user_id: user_id })
   end
 
   private

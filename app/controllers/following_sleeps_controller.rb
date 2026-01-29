@@ -5,18 +5,14 @@ class FollowingSleepsController < ApplicationController
   # TODO: Add previous\next week metadata if clients need to scroll through the weeks
   # TODO: Allow clients to paginate by duration to see lower duration sleeps for the given week
   def index
-    @sleeps = Sleep.includes(:user)
-      .during_week(week_time)
-      .followed_by(user)
-      .order(duration: :desc)
-      .limit(list_size)
+    @sleeps = followers_sleep_journal.sleeps_during_week(week_time, limit: list_size)
     render json: ResponseSerializer.new(@sleeps, serializer: FollowingSleepSerializer)
   end
 
   private
 
-  def user
-    User.find(params.fetch(:user_id))
+  def followers_sleep_journal
+    Sleeping.followed_journals(params.fetch(:user_id))
   end
 
   # TODO: Refactor into concern for pagination parameters

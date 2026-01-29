@@ -1,3 +1,4 @@
 enforce_dependencies: true
 dependencies: []
 enforce_privacy: true
+public_path: sleeping/
