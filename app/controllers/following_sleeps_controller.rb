@@ -10,6 +10,7 @@ class FollowingSleepsController < ApplicationController
       .followed_by(user)
       .order(duration: :desc)
       .limit(list_size)
+    render json: ResponseSerializer.new(@sleeps, serializer: FollowingSleepSerializer)
   end
 
   private

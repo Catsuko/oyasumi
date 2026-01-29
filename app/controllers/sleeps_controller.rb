@@ -4,18 +4,19 @@ class SleepsController < ApplicationController
     @sleeps = user.sleeps
       .list_by_started_at(list_cursor)
       .limit(list_size)
+    render json: ResponseSerializer.new(@sleeps, serializer: SleepSerializer)
   end
 
   def create
     @sleep = user.sleeps.create!(sleep_params).reload
-    render :show, status: :created
+    render json: ResponseSerializer.new(@sleep, serializer: SleepSerializer), status: :created
   end
 
   def update
     @sleep = user.sleeps.find(params.fetch(:id))
     @sleep.update!(sleep_params)
     @sleep.reload
-    render :show
+    render json: ResponseSerializer.new(@sleep, serializer: SleepSerializer)
   end
 
   private
