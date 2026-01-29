@@ -1,15 +1,16 @@
-FROM ruby:3.2.2-alpine
+FROM ruby:3.2.2-slim
 
 WORKDIR /oyasumi
 COPY . .
-RUN apk update && apk add --update --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   bash \
   tzdata \
-  libpq-dev
-RUN apk --update add --virtual build-dependencies \
-    build-base ruby-dev libc-dev && \
-    bundle install && \
-    apk del build-dependencies
+  libpq-dev \
+  build-essential \
+  ruby-dev \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN bundle install
 
 EXPOSE 3000
 
